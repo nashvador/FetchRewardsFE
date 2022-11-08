@@ -1,4 +1,4 @@
-import { useState, useEffect, SyntheticEvent, ChangeEventHandler, ChangeEvent } from "react";
+import { useState, useEffect, SyntheticEvent, ChangeEvent } from "react";
 import {
   Box,
   TextField,
@@ -56,7 +56,6 @@ const FormPage = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
     try {
       const submitFormInformation = await axios.post(
         `https://frontend-take-home.fetchrewards.com/form`,
