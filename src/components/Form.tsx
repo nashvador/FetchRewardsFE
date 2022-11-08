@@ -48,21 +48,27 @@ const FormPage = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try {
-      const user = {
-        username: data.get("name"),
-        email: data.get("email"),
-        password: data.get("password"),
-        occupation: occupationValue,
-        state: data.get("state"),
-      };
-      console.log(user);
+      const submitFormInformation = await axios.post(
+        `https://frontend-take-home.fetchrewards.com/form`,
+        {
+          name: data.get("name"),
+          email: data.get("email"),
+          password: data.get("password"),
+          occupation: occupationValue,
+          state: stateValue,
+        }
+      );
+      console.log(submitFormInformation);
     } catch (err: unknown) {
-      console.log(err)
+      console.log(err);
     }
   };
   const handleChange = (event: SelectChangeEvent) => {
     setOccupationValue(event.target.value as string);
   };
+
+  console.log(occupationValue);
+  console.log(stateValue);
 
   return loading ? (
     <CircularProgress />
@@ -107,9 +113,15 @@ const FormPage = () => {
           label="Occupation"
           onChange={handleChange}
         >
-          {occupationAndStateData.occupations.map((occupation: string, key: number) => {
-            return <MenuItem key={key} value={occupation}>{occupation}</MenuItem>;
-          })}
+          {occupationAndStateData.occupations.map(
+            (occupation: string, key: number) => {
+              return (
+                <MenuItem key={key} value={occupation}>
+                  {occupation}
+                </MenuItem>
+              );
+            }
+          )}
         </Select>
       </FormControl>
       <Autocomplete
