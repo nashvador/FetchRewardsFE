@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SyntheticEvent } from "react";
 import {
   Box,
   TextField,
@@ -56,7 +56,7 @@ const FormPage = () => {
         state: data.get("state"),
       };
       console.log(user);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err)
     }
   };
@@ -115,7 +115,7 @@ const FormPage = () => {
       <Autocomplete
         disablePortal
         value={stateValue}
-        onChange={(event: any, newValue: string | null) => {
+        onChange={(event: SyntheticEvent, newValue: string | null) => {
           event.preventDefault();
           setStateValue(newValue);
         }}
