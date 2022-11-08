@@ -18,6 +18,8 @@ jobs:
           node-version: "16"
       - name: npm install
         run: npm install
+      - name: lint code
+        run: npm run lint
   deployment_pipeline:
     needs: [setup_pipeline]
     runs-on: ubuntu-20.04

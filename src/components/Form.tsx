@@ -56,7 +56,9 @@ const FormPage = () => {
         state: data.get("state"),
       };
       console.log(user);
-    } catch (err: any) {}
+    } catch (err: any) {
+      console.log(err)
+    }
   };
   const handleChange = (event: SelectChangeEvent) => {
     setOccupationValue(event.target.value as string);
@@ -105,8 +107,8 @@ const FormPage = () => {
           label="Occupation"
           onChange={handleChange}
         >
-          {occupationAndStateData.occupations.map((occupation: string) => {
-            return <MenuItem value={occupation}>{occupation}</MenuItem>;
+          {occupationAndStateData.occupations.map((occupation: string, key: number) => {
+            return <MenuItem key={key} value={occupation}>{occupation}</MenuItem>;
           })}
         </Select>
       </FormControl>
