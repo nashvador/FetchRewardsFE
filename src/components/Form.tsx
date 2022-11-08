@@ -84,7 +84,7 @@ const FormPage = () => {
   };
 
   return loading ? (
-    <CircularProgress />
+    <CircularProgress id="loadingCircle"/>
   ) : (
     <Box component="form" onSubmit={handleSubmit} maxWidth="sm">
       {submitMessage ? <Alert severity="success">{submitMessage}</Alert> : 
