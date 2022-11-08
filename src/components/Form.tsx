@@ -1,4 +1,4 @@
-import { useState, useEffect, SyntheticEvent } from "react";
+import { useState, useEffect, SyntheticEvent, ChangeEventHandler, ChangeEvent } from "react";
 import {
   Box,
   TextField,
@@ -10,6 +10,7 @@ import {
   FormControl,
   CircularProgress,
   Autocomplete,
+  Alert
 } from "@mui/material";
 import axios from "axios";
 
@@ -24,14 +25,23 @@ interface occupationAndStateDataType {
 }
 
 const FormPage = () => {
+  // This is the state for the API call
   const [occupationAndStateData, setOccupationAndStateData] =
     useState<occupationAndStateDataType>({
       occupations: [""],
       states: [{ name: "", abbreviation: "" }],
     });
+
+  // These are the states for the form info
+  const [nameValue, setNameValue] = useState<string | null>(null)
+  const [emailValue, setEmailValue] = useState<string | null>(null)
+  const [passwordValue, setPasswordValue] = useState<string | null>(null)
   const [occupationValue, setOccupationValue] = useState<string>("");
   const [stateValue, setStateValue] = useState<string | null>("");
+
+  // These are the message and loading component states
   const [loading, setLoading] = useState<boolean>(true);
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null)
 
   useEffect(() => {
     const setAndGetData = async () => {
@@ -51,31 +61,39 @@ const FormPage = () => {
       const submitFormInformation = await axios.post(
         `https://frontend-take-home.fetchrewards.com/form`,
         {
-          name: data.get("name"),
-          email: data.get("email"),
-          password: data.get("password"),
+          name: nameValue,
+          email: emailValue,
+          password: passwordValue,
           occupation: occupationValue,
           state: stateValue,
         }
       );
-      console.log(submitFormInformation);
+      if (submitFormInformation.status === 201) {
+        setSubmitMessage("Successful Submission!")
+        setTimeout(() => {
+          setSubmitMessage(null);
+        }, 3000);
+        setNameValue("")
+        setEmailValue("")
+        setPasswordValue("")
+        setOccupationValue("")
+        setStateValue("")
+      }
     } catch (err: unknown) {
       console.log(err);
     }
   };
-  const handleChange = (event: SelectChangeEvent) => {
-    setOccupationValue(event.target.value as string);
-  };
-
-  console.log(occupationValue);
-  console.log(stateValue);
 
   return loading ? (
     <CircularProgress />
   ) : (
     <Box component="form" onSubmit={handleSubmit} maxWidth="sm">
+      {submitMessage ? <Alert severity="success">{submitMessage}</Alert> : 
+      "" }
       <TextField
         margin="normal"
+        value={nameValue}
+        onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setNameValue(event.target.value as string)}
         required
         fullWidth
         id="name"
@@ -86,6 +104,8 @@ const FormPage = () => {
       />
       <TextField
         margin="normal"
+        value={emailValue}
+        onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setEmailValue(event.target.value as string)}
         required
         fullWidth
         id="email"
@@ -96,6 +116,8 @@ const FormPage = () => {
       />
       <TextField
         margin="normal"
+        value={passwordValue}
+        onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setPasswordValue(event.target.value as string)}
         required
         fullWidth
         name="password"
@@ -104,14 +126,17 @@ const FormPage = () => {
         id="password"
         autoComplete="current-password"
       />
-      <FormControl fullWidth sx={{ mt: 2 }}>
+      <FormControl fullWidth sx={{ mt: 2, mb:1  }}>
         <InputLabel id="occupation-select">Occupation</InputLabel>
         <Select
           labelId="occupation-select"
           id="frontend-occupation-select"
           value={occupationValue}
           label="Occupation"
-          onChange={handleChange}
+          onChange={(event: SelectChangeEvent) => {
+            setOccupationValue(event.target.value as string);
+          }}
+          required
         >
           {occupationAndStateData.occupations.map(
             (occupation: string, key: number) => {
@@ -136,10 +161,11 @@ const FormPage = () => {
         options={occupationAndStateData.states.map(
           (state: states) => state.name
         )}
-        sx={{ mt: 3, mb: 2 }}
-        renderInput={(params) => <TextField {...params} label="State" />}
+        sx={{ mt: 2, mb: 1}}
+        
+        renderInput={(params) => <TextField required  {...params} label="State" />}
       />{" "}
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+      <Button type="submit" fullWidth variant="contained" sx={{ mt: 2, mb: 1}}>
         Submit Form
       </Button>
     </Box>
