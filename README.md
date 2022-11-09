@@ -1,6 +1,19 @@
 # Fetch Rewards Frontend Takehome - Nirvignesh Vador Submission
 
-This is my solution for the Fetch Rewards Frontend Takehome Project.
+This is my solution for the Fetch Rewards Frontend Takehome Project. It's a form submission.
+
+![image](./img/FormImage.png)
+
+## Technologies Chosen
+
+- Framework: React
+- Library: Material-UI
+- Testing
+    - E2E: Cypress
+    - Unit: Jest/react-testing-library
+- CI/CD: Github Actions
+- Deployment: Netlify
+- Versioning: Github Tag Action
 
 ## Getting Started
 
@@ -20,17 +33,6 @@ cd FetchRewardsFE
 npm install
 npm start
 ```
-
-## Technologies Chosen
-
-- Framework: React
-- Library: Material-UI
-- Testing
-    - E2E: Cypress
-    - Unit: Jest/react-testing-library
-- CI/CD: Github Actions
-- Deployment: Netlify
-- Versioning: Github Tag Action
 
 ## Running Tests
 
