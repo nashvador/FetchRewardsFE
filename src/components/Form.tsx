@@ -25,21 +25,18 @@ interface occupationAndStateDataType {
 }
 
 const FormPage = () => {
-  // This is the state for the API call
   const [occupationAndStateData, setOccupationAndStateData] =
     useState<occupationAndStateDataType>({
       occupations: [""],
       states: [{ name: "", abbreviation: "" }],
     });
 
-  // These are the states for the form info
   const [nameValue, setNameValue] = useState<string | null>(null)
   const [emailValue, setEmailValue] = useState<string | null>(null)
   const [passwordValue, setPasswordValue] = useState<string | null>(null)
   const [occupationValue, setOccupationValue] = useState<string>("");
   const [stateValue, setStateValue] = useState<string | null>("");
 
-  // These are the message and loading component states
   const [loading, setLoading] = useState<boolean>(true);
   const [submitMessage, setSubmitMessage] = useState<string | null>(null)
 
@@ -52,7 +49,6 @@ const FormPage = () => {
   };
 
   useEffect(() => {
-
     setAndGetData();
   }, []);
 
