@@ -43,14 +43,16 @@ const FormPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [submitMessage, setSubmitMessage] = useState<string | null>(null)
 
+  const setAndGetData = async () => {
+    const response = await axios.get(
+      "https://frontend-take-home.fetchrewards.com/form"
+    );
+    setOccupationAndStateData(response.data);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const setAndGetData = async () => {
-      const response = await axios.get(
-        "https://frontend-take-home.fetchrewards.com/form"
-      );
-      setOccupationAndStateData(response.data);
-      setLoading(false);
-    };
+
     setAndGetData();
   }, []);
 

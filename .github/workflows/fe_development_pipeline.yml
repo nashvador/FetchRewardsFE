@@ -20,6 +20,8 @@ jobs:
         run: npm install
       - name: lint code
         run: npm run lint
+      - name: unit test code
+        run: npm run test
   deployment_pipeline:
     needs: [setup_pipeline]
     runs-on: ubuntu-20.04
