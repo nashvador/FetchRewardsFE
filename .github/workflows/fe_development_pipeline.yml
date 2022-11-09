@@ -23,11 +23,12 @@ jobs:
       - name: unit test code
         run: npm run test
       - name: end to end testing
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           start: npm start
           command: npm run cypress:open
           wait-on: http://localhost:3000
+          browser: chrome
   deployment_pipeline:
     needs: [setup_pipeline]
     runs-on: ubuntu-20.04
